@@ -1,8 +1,18 @@
 class Heap(object):
-    def __init__(self,Arr):
-        self.Array = Arr
+    def __init__(self,*argv):
+        self.Array = []
+        if argv :
+            for i in argv:
+                if type(i) == int :
+                    self.Array.append(i)
+                else:
+                    print("Heap accepts only numericals")
+        else:
+            self.Array = list(input("Enter the input array").split(','))
         # self.N = len(Arr)
-
+    #refer to the Donbader website for difference betewen __repr__ and __str__
+    def __repr__(self):
+        return '{self.__class__.__name__}({self.Array})'.format(self = self)
 
     def max_heapify(self):
         N = len(self.Array)
