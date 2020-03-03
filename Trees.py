@@ -16,7 +16,7 @@ class BinaryTree(object):
         node_q= [BinaryTree.root]
         print(node_q)
         print(type(node_q))
-        self._add(node_q[0],node_q,key)
+        self.__add(node_q[0],node_q,key)
         del node_q
     
     def __add(self,temp_node,node_q,key):
