@@ -14,8 +14,8 @@ class BinaryTree(object):
     
     def add(self,key):
         node_q= [BinaryTree.root]
-        print(node_q)
-        print(type(node_q))
+        # print(node_q)
+        # print(type(node_q))
         self.__add(node_q[0],node_q,key)
         del node_q
     
@@ -41,3 +41,25 @@ class BinaryTree(object):
             self.in_order(node.left)
             print(node.key)
             self.in_order(node.right)
+    
+    def find(self,key):
+        node_q= [BinaryTree.root]
+        _found = self.__find(node_q[0],node_q,key)
+        if _found:
+            print("Key Found")
+        else:
+            print("Key Not Found")
+        del node_q
+
+    def __find(self,temp_node,node_q,key):
+        if temp_node != None:
+            if temp_node.key == key:
+                return 1
+            else:
+                if temp_node.left != None:
+                    node_q.append(temp_node.left)
+                if temp_node.right != None:
+                    node_q.append(temp_node.right)
+                if len(node_q) > 1:
+                    return self.__find(node_q[1],node_q[1:],key)
+
