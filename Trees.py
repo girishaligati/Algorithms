@@ -45,24 +45,45 @@ class BinaryTree(object):
     
     def find(self,key):
         node_q= [BinaryTree.root]
+        key_at = []
         index = 0
-        _found = self.__find(node_q[index],node_q,key,index)
-        if _found:
-            print("Key Found")
+        self.__find(node_q[index],node_q,key,index,key_at)
+        if key_at:
+            print("Key Found",key_at)
         else:
             print("Key Not Found")
-        del node_q
 
-    def __find(self,temp_node,node_q,key,index):
+    def __find(self,temp_node,node_q,key,index,key_at):
         if temp_node != None:
             if temp_node.key == key:
-                return 1
+                key_at.append(temp_node)
             else:
                 if temp_node.left != None:
                     node_q.append(temp_node.left)
                 if temp_node.right != None:
                     node_q.append(temp_node.right)
-                if len(node_q) > 1:
-                    index = index + 1
-                    return self.__find(node_q[index],node_q,key,index)
-                    
+                index = index + 1
+                if index < len(node_q):
+                    self.__find(node_q[index],node_q,key,index,key_at)
+    
+    # def level_traversal(self):
+    #     node_q = [BinaryTree.root]
+    #     index = 0
+    #     self.__level_traversal(node_q[index],node_q,index)
+    #     print(node_q)
+    #     for i in node_q:
+    #         print(i.key)
+    
+    # def __level_traversal(self,temp_node,node_q,index):
+    #     if temp_node != None:
+    #         if temp_node.left != None:
+    #             node_q.append(temp_node.left)
+    #         if temp_node.right != None:
+    #             node_q.append(temp_node.right)
+    #         index = index + 1
+    #         if index < len(node_q):
+    #             return self.__level_traversal(node_q[index],node_q,index)
+    
+    # def delete(self,key):
+    #     node_q = [BinaryTree.root]
+    #     self.__level_traversal(node_q[0],node_q,0)
