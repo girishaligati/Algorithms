@@ -86,37 +86,38 @@ class BinaryTree(object):
     
     def delete(self,key):
         #Form list of nodes into a data structure using the __level_traversal code
-        node_q = [BinaryTree.root]
-        index = 0
+        node_q = [None,BinaryTree.root]
+        index = 1
         self.__level_traversal(node_q[index],node_q,index)
         key_node = None
         key_loc = None
-        for at,node in enumerate(node_q):
+        for at,node in enumerate(node_q[1:]):
             if (key == node.key):
                 key_node = node
-                key_loc = at
+                key_loc = at+1
         self.__delete(key_node,key_loc,node_q)
     
     def __delete(self,key_node,key_loc,node_q):
-        parent_key = int((key_loc + 1)/2)
         last_node=node_q[-1]
         last_node_loc = len(node_q) - 1
-
-        # remove the connection between last node and its parent
-        parent_last_node = node_q[int((last_node_loc + 1)/2)]
-        if parent_last_node.left == last_node:
-            parent_last_node.left == None
-        elif parent_last_node.right == last_node:
-            parent_last_node.right == None
+        parent_last_node = node_q[last_node_loc//2]
+        
         # Connecting the key_node successors to the last node
-        if (key_node.left):
-            last_node.left = key_node.left
-        if key_node.right:
-            last_node.right = key_node.right
+        last_node.left = key_node.left
+        last_node.right = key_node.right
+        
+        # remove the connection between last node and its parent
+        if parent_last_node.left == last_node:
+            parent_last_node.left = None
+        elif parent_last_node.right == last_node:
+            parent_last_node.right = None
+
         # Connecting the key_node parents to the last_node
-        if(node_q[parent_key]):
+        if key_node == BinaryTree.root:
+            BinaryTree.root = last_node
+        else:
+            parent_key = key_loc//2
             if node_q[parent_key].left == key_node:
                 node_q[parent_key].left = last_node
             elif node_q[parent_key].right == key_node:
                 node_q[parent_key].right = last_node
-        
