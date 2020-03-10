@@ -66,24 +66,57 @@ class BinaryTree(object):
                 if index < len(node_q):
                     self.__find(node_q[index],node_q,key,index,key_at)
     
-    # def level_traversal(self):
-    #     node_q = [BinaryTree.root]
-    #     index = 0
-    #     self.__level_traversal(node_q[index],node_q,index)
-    #     print(node_q)
-    #     for i in node_q:
-    #         print(i.key)
+    def level_traversal(self):
+        node_q = [BinaryTree.root]
+        index = 0
+        self.__level_traversal(node_q[index],node_q,index)
+        # print(node_q)
+        for i in node_q:
+            print(i.key)
     
-    # def __level_traversal(self,temp_node,node_q,index):
-    #     if temp_node != None:
-    #         if temp_node.left != None:
-    #             node_q.append(temp_node.left)
-    #         if temp_node.right != None:
-    #             node_q.append(temp_node.right)
-    #         index = index + 1
-    #         if index < len(node_q):
-    #             return self.__level_traversal(node_q[index],node_q,index)
+    def __level_traversal(self,temp_node,node_q,index):
+        if temp_node != None:
+            if temp_node.left != None:
+                node_q.append(temp_node.left)
+            if temp_node.right != None:
+                node_q.append(temp_node.right)
+            index = index + 1
+            if index < len(node_q):
+                return self.__level_traversal(node_q[index],node_q,index)
     
-    # def delete(self,key):
-    #     node_q = [BinaryTree.root]
-    #     self.__level_traversal(node_q[0],node_q,0)
+    def delete(self,key):
+        #Form list of nodes into a data structure using the __level_traversal code
+        node_q = [BinaryTree.root]
+        index = 0
+        self.__level_traversal(node_q[index],node_q,index)
+        key_node = None
+        key_loc = None
+        for at,node in enumerate(node_q):
+            if (key == node.key):
+                key_node = node
+                key_loc = at
+        self.__delete(key_node,key_loc,node_q)
+    
+    def __delete(self,key_node,key_loc,node_q):
+        parent_key = int((key_loc + 1)/2)
+        last_node=node_q[-1]
+        last_node_loc = len(node_q) - 1
+
+        # remove the connection between last node and its parent
+        parent_last_node = node_q[int((last_node_loc + 1)/2)]
+        if parent_last_node.left == last_node:
+            parent_last_node.left == None
+        elif parent_last_node.right == last_node:
+            parent_last_node.right == None
+        # Connecting the key_node successors to the last node
+        if (key_node.left):
+            last_node.left = key_node.left
+        if key_node.right:
+            last_node.right = key_node.right
+        # Connecting the key_node parents to the last_node
+        if(node_q[parent_key]):
+            if node_q[parent_key].left == key_node:
+                node_q[parent_key].left = last_node
+            elif node_q[parent_key].right == key_node:
+                node_q[parent_key].right = last_node
+        
