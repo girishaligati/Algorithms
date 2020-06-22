@@ -8,7 +8,7 @@ class Heap(object):
                 else:
                     print("Heap accepts only numericals")
         else:
-            self.Array = list(input("Enter the input array").split(','))
+            self.Array = list(input("Enter the input array in comma seperated type ex: 1,2,3,4").split(','))
         # self.N = len(Arr)
     #refer to the Donbader website for difference betewen __repr__ and __str__
     def __repr__(self):
